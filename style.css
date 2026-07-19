@@ -1,46 +1,106 @@
 /* lessons.css — 全課共通スタイル */
-
 body { max-width: 860px; margin: 0 auto; padding: 1rem 1.5rem; }
-
 /* タイトル：スマホでサイズ・行間を調整 */
 @media (max-width: 600px) {
-  h1 { font-size: 1.5rem; line-height: 1.3; }
-  h2 { font-size: 1.35rem; }
+  h1 { font-size: 1.6rem; line-height: 1.3; }
+  h2 { font-size: 1.4rem; }
+  h3 { font-size: 1.15rem; }
 }
-
 /* 目次 */
 .toc { background: #f7f7f7; border-left: 4px solid #aaa; padding: 0.6rem 1rem; margin-bottom: 2rem; }
 .toc summary { font-weight: bold; cursor: pointer; }
 .toc ol { margin: 0.4rem 0 0; padding-left: 1.4rem; }
-
 /* 助詞ハイライト */
 .particle { display: inline-block; background: #fff3cd; border: 1px solid #e0c060; border-radius: 3px; padding: 0 5px; font-weight: bold; }
-
 /* 文法ボックス */
 .grammar-box { background: #f0f4ff; border: 1px solid #b0c0e8; border-radius: 4px; padding: 0.7rem 1rem; margin: 0.8rem 0; }
-
 /* 例文 */
 .example { margin: 0.4rem 0 0.4rem 1.2rem; line-height: 1.8; }
 .example .en { color: #666; font-size: 0.88em; margin-left: 0.4em; }
-
 /* テーブル内英語補足 */
 td .en { display: block; color: #888; font-size: 0.82em; }
-
 /* 注釈 */
 .note { color: #888; font-size: 0.88em; }
-
 /* 会話ブロック */
 .kaiwa { background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; padding: 0.8rem 1.2rem; margin: 0.8rem 0; }
 .kaiwa p { margin: 0.3rem 0; line-height: 1.8; }
-
 /* 構造表示（monospace） */
 .structure { font-family: monospace; background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-size: 0.95em; }
-
 /* テーブル横スクロール（スマホ対応） */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .table-wrap th { white-space: nowrap; }
 .table-wrap td:nth-child(3) { min-width: 200px; }
-
 /* 単語リスト */
 .word-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0.4rem 0; margin: 0; }
 .word-list li { background: #eee; border-radius: 3px; padding: 2px 10px; font-size: 0.93em; }
+
+/* ===================================================================
+   以下、この課（音読み・訓読みと部首）のための追記
+   既存クラス（.grammar-box / .example / .toc など）は上の定義を
+   そのまま使う。ここでは、上にまだ無いものだけを追加する。
+   =================================================================== */
+
+:root{
+  --accent-on:#b3402c;   /* 音読み用 */
+  --accent-kun:#2c5b8a;  /* 訓読み用 */
+  --accent-bu:#8a6b2c;   /* 部首の位置用 */
+}
+
+/* 音読み・訓読みのラベル */
+.tag { display: inline-block; font-size: 0.78em; font-weight: bold; padding: 1px 8px; border-radius: 10px; margin-right: 6px; }
+.tag.on { background: #f3ddd6; color: var(--accent-on); }
+.tag.kun { background: #d9e4ee; color: var(--accent-kun); }
+
+/* grammar-box の色分け（音読み／訓読み／部首） */
+.grammar-box.on { border-left: 5px solid var(--accent-on); }
+.grammar-box.kun { border-left: 5px solid var(--accent-kun); }
+.grammar-box.bu { border-left: 5px solid var(--accent-bu); }
+
+/* かんじ列を大きく表示 */
+td.kj { font-size: 1.3em; text-align: center; width: 60px; }
+
+/* 部首の位置図（田の字ボックス） */
+.pos-diagram { display: inline-block; margin: 14px 0; text-align: center; }
+.pos-diagram .box { width: 96px; height: 96px; margin: 0 auto; position: relative; border: 1px solid #bbb; background: #fff; }
+.pos-diagram .box .kanji { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2.4em; color: #333; }
+.pos-diagram .box .hi { position: absolute; background: #f0e0c8; border: 1px solid var(--accent-bu); }
+.pos-diagram .box .hi.left { left: -1px; top: -1px; bottom: -1px; width: 42%; }
+.pos-diagram .box .hi.right { right: -1px; top: -1px; bottom: -1px; width: 42%; }
+.pos-diagram .box .hi.top { left: -1px; right: -1px; top: -1px; height: 38%; }
+.pos-diagram .box .hi.wrap { left: -1px; top: -1px; bottom: -1px; width: 40%; clip-path: polygon(0 0,100% 0,100% 32%,40% 32%,40% 100%,0 100%); }
+.pos-diagram .box .hi.surround { inset: -1px; border: 3px solid var(--accent-bu); background: transparent; }
+.pos-caption { font-size: 0.85em; color: #777; margin-top: 6px; }
+
+/* 見分け方まとめ：全タイプ入りマップ */
+.mapwrap { display: flex; justify-content: center; margin: 20px 0; }
+.bigmap { width: 220px; height: 220px; position: relative; margin: 46px auto; }
+.bigmap .box { position: absolute; inset: 0; border: 1px solid #bbb; background: #fff; }
+.bigmap .box .kanji { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 5.5em; color: #ddd; }
+.bigmap .z { position: absolute; font-size: 0.72em; background: #f7f7f7; border: 1px solid #ddd; border-radius: 4px; padding: 2px 7px; white-space: nowrap; color: #555; }
+/* 内側（上下中央）：かんむり・あし */
+.bigmap .z1 { top: 8px; left: 50%; transform: translateX(-50%); }
+.bigmap .z2 { bottom: 8px; left: 50%; transform: translateX(-50%); }
+/* 外側・左右中央：へん・つくり */
+.bigmap .z3 { top: 50%; left: -74px; transform: translateY(-50%); }
+.bigmap .z4 { top: 50%; right: -80px; transform: translateY(-50%); }
+/* 外側・上の左右角：たれ・かまえ（かんむりの行とはずらす） */
+.bigmap .z5 { top: -38px; left: 0; }
+.bigmap .z7 { top: -38px; right: 0; }
+/* 外側・下の左角：にょう（あしの行とはずらす） */
+.bigmap .z6 { bottom: -38px; left: 0; }
+/* この図は絶対配置のラベルが7個あり、幅が狭い画面では位置調整が破綻しやすい。
+   直後に同じ内容の表があるので、スマホ幅では図自体を隠して表だけ見せる。 */
+@media (max-width: 600px) {
+  .mapwrap { display: none; }
+}
+
+/* 音読みの推測：同じ音符を持つ漢字グループ */
+.family-box { background: #f7f7f7; border: 1px solid #ddd; border-radius: 6px; padding: 14px 18px; margin: 16px 0; }
+.family-box .seed { font-size: 1.4em; font-weight: bold; margin-right: 8px; }
+.family-box .members { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 14px; }
+.family-box .fm { text-align: center; font-size: 0.9em; }
+.family-box .fm .kj { font-size: 1.5em; display: block; }
+.family-box .fm .r { color: var(--accent-on); font-weight: bold; }
+
+/* 注意書き */
+.caution { background: #fdf3ec; border: 1px solid #e8cdb0; border-radius: 6px; padding: 10px 16px; font-size: 0.92em; margin: 14px 0; }
